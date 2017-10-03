@@ -36,7 +36,7 @@ This section explains how you can build your own Cordova plugin for Vidyo.io usi
 
 #### Now we have to copy a few files from Vidyo.IO sample application to the plugin folder.
 
-- copy the res folder from the sample to VidyoIOPlugin/src/android
+- copy the res folder from the sample to VidyoIOPlugin/src/android. make sure to rename res/values/strings.xml to res/values/strings2.xml
 - copy the lib folder from the sample to VidyoIOPlugin/src/android
 - copy the com folder from VidyoConnector\android\app\src\main\java to VidyoIOPlugin/src/android
 - We have to refactor the MainActivity.Java file included in the sample to VidyoIOActivity.java and change the class name also to reflect the change. We have to do this because, when we install this plugin in to the Cordova project, Cordova project also has a MainActivity so there will be a conflict.
@@ -165,7 +165,7 @@ android:label="@string/app_name" >
 <source-file src="src/android/res/mipmap-xhdpi/ic_launcher.png" target-dir="res/mipmap-xhdpi" />
 <source-file src="src/android/res/mipmap-xxhdpi/ic_launcher.png" target-dir="res/mipmap-xxhdpi" />
 <source-file src="src/android/res/values/dimens.xml" target-dir="res/values" />
-<source-file src="src/android/res/values/strings.xml" target-dir="res/values" />
+<source-file src="src/android/res/values/strings2.xml" target-dir="res/values" />
 <source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 <source-file src="src/android/res/values-w820dp/dimens.xml" target-dir="res/values-w820dp" />
 </platform>
@@ -299,21 +299,7 @@ function new_activity() {
 
 Few more changes before we can build the project
 
-add activity_name and launcher_name to the VidyoIOHybrid\platforms\android\res\values\strings.xml
-
-```
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-<string name="app_name">VidyoIO Hybrid App</string>
-<string name="activity_name">VidyoIOCordovaSample</string>
-<string name="launcher_name">VidyoIOCordovaSample</string>
-<string name="LoginButton">Login</string>
-<string name="action_settings">Settings</string>
-<string name="hello_blank_fragment">Hello blank fragment</string>
-<string name="title_activity_conference_room">ConferenceRoom</string>
-</resources>
-
-```
+In VidyoIOHybrid\platforms\android\res\values\ folder you will have strings.xml and strings2.xml. Merge these files in to a single file strings.xml
 
 add an additional import to VidyoIOHybrid\platforms\android\src\com\vidyo\vidyoconnector\VidyoIOActivity.java
 
