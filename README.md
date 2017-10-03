@@ -2,6 +2,11 @@
 
 This a Vidyo.io Android plugin for Cordova. This plugin is built using the Vidyo.io Android sample available @ https://vidyo.io. If you would like to build the plugin from scratch against a newer version of Vidyo.io sample, follow the procedure give below.
 
+- [How to use this plugin] (https://github.com/Vidyo/VidyoIOCordovaPlugin#how-to-use)
+- [How to create this plugin from scratch] (https://github.com/Vidyo/VidyoIOCordovaPlugin#how-to-create-this-plugin-from-scratch)
+- [How to import this plugin in to a Cordova Project] (https://github.com/Vidyo/VidyoIOCordovaPlugin#how-to-import-this-plugin-in-to-a-cordova-project)
+
+
 ## How to use
 
       cordova plugin add <path-to-plugin-folder>
