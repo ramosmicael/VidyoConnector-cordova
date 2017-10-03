@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/videoFrame" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/toggleToolbarFrame"
+            android:onClick="ToggleToolbarVisibility"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/controlsLayout"
+                    android:orientation="vertical"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="0dp"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:background="@drawable/rounded_border_edittext"
+                    android:alpha="0.9">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="0dp"
+                        android:paddingBottom="0dp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:src="@drawable/vidyo_io_vertical_dark_at_2x"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/button_material_light"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:textSize="15sp"
+                            android:width="110dp"
+                            android:gravity="end"
+                            android:maxLines="1"
+                            android:paddingEnd="5dp"
+                            android:text="Host"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:textSize="12sp"
+                            android:id="@+id/hostTextBox"
+                            android:elegantTextHeight="true"
+                            android:enabled="true"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:inputType="text"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingTop="0dp"
+                            android:background="@android:color/transparent"
+                            android:hint="example.vidyo.io" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/button_material_light"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:textSize="15sp"
+                            android:width="110dp"
+                            android:gravity="end"
+                            android:maxLines="1"
+                            android:paddingEnd="5dp"
+                            android:text="Token"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:textSize="12sp"
+                            android:id="@+id/tokenTextBox"
+                            android:elegantTextHeight="true"
+                            android:enabled="true"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:inputType="text"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:background="@android:color/transparent"
+                            android:paddingTop="0dp"
+                            android:hint="required"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/button_material_light"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:textSize="15sp"
+                            android:width="110dp"
+                            android:gravity="end"
+                            android:maxLines="1"
+                            android:paddingEnd="5dp"
+                            android:text="Display Name"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:textSize="12sp"
+                            android:id="@+id/displayNameTextBox"
+                            android:elegantTextHeight="true"
+                            android:enabled="true"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:inputType="text"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingTop="0dp"
+                            android:background="@android:color/transparent"
+                            android:hint="your name"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/button_material_light"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:textSize="15sp"
+                            android:width="110dp"
+                            android:gravity="end"
+                            android:maxLines="1"
+                            android:paddingEnd="5dp"
+                            android:text="Resource ID"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:textSize="12sp"
+                            android:id="@+id/resourceIdTextBox"
+                            android:elegantTextHeight="true"
+                            android:enabled="true"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:inputType="text"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:paddingTop="0dp"
+                            android:background="@android:color/transparent"
+                            android:hint="required"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/button_material_light"/>
+
+                    <ProgressBar
+                        android:id="@+id/connectionSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:visibility="invisible"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:id="@+id/toolbarLayout">
+
+                <ToggleButton
+                    android:id="@+id/toggleConnectButton"
+                    android:onClick="ToggleConnectButtonPressed"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/toggle_connect"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="0dp"
+                    android:textOn=""
+                    android:textOff=""
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
+                <ToggleButton
+                    android:id="@+id/cameraSwitch"
+                    android:onClick="CameraSwapButtonPressed"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/camera_switch"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="30dp"
+                    android:textOn=""
+                    android:textOff=""
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
+                <ToggleButton
+                    android:id="@+id/cameraPrivacyButton"
+                    android:onClick="CameraPrivacyButtonPressed"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/toggle_camera_privacy"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="30dp"
+                    android:textOn=""
+                    android:textOff=""
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
+                <ToggleButton
+                    android:id="@+id/microphonePrivacyButton"
+                    android:onClick="MicrophonePrivacyButtonPressed"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/toggle_mic_privacy"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="30dp"
+                    android:textOn=""
+                    android:textOff=""
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/toolbarStatusText"
+                android:layout_height="20dp"
+                android:layout_width="match_parent"
+                android:maxLines="1"
+                android:gravity="center_horizontal|bottom"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="#f1f1f1"
+                android:shadowColor="#0d0d0d"
+                android:shadowRadius="2.0"
+                android:shadowDx="-3.0"
+                android:shadowDy="-3.0"
+                android:text="Ready"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
+
+
+
