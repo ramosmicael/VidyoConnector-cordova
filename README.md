@@ -203,7 +203,10 @@ Here we demontrate how to create a sample Cordova project and import the VidyoIO
       $ cordova platform add android
     
 ### Now add the previously built Vidyo.IO plugin to this project
-      $ cordova plugin add C:\CordovaPlugins\VidyoIOPlugin
+      $ cordova plugin add <plugin-path>  
+ OR,
+      
+      $ cordova plugin add https://github.com/Vidyo/VidyoIOCordovaPlugin.git
       
 This step copies all the relevant files from the plugin folder to the Cordova project folder. It also merges the information related to permissions in to the AndroidManifest.xml. This step should complete without any errors.
 
@@ -333,3 +336,5 @@ If the build is successful you can run the application
       
 You can also run the application by manually installing the apk file from VidyoIOHybrid\platforms\android\build\outputs\apk
 On the welcome screen, click on "Launch Vidyo" button to open the Vidyo.IO android activity
+
+## Important: on Android > 6.0 you have to manually grant camera, microphone and storage permissions, otherwise app will crash.
