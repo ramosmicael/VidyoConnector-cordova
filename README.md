@@ -26,4 +26,5 @@ This section explains how you can build your own Cordova plugin for Vidyo.io usi
 
 #### Add Android platform to the plugin by typing the following command
 >$ cd VidyoIOPlugin
+
 >$ plugman platform add --platform_name android
