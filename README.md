@@ -293,6 +293,7 @@ function new_activity() {
 ```
 
 Few more changes before we can build the project
+
 add activity_name and launcher_name to the VidyoIOHybrid\platforms\android\res\values\strings.xml
 
 ```
