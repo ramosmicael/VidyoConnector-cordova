@@ -1,6 +1,6 @@
 # VidyoIOCordovaPlugin
 
-This a Vidyo.io Android plugin for Cordova. This plugin is built using the Vidyo.io Android sample available @ https://vidyo.io. If you would like to build the plugin from scratch against a newer version of Vidyo.io sample, follow the procedure give below.
+This a Vidyo.io Android plugin for Cordova. This plugin is built using the Vidyo.io Android sample available @ https://vidyo.io. 
 
 - [How to use this plugin](#how-to-use)
 - [How to create this plugin from scratch](#how-to-create-this-plugin-from-scratch)
@@ -15,7 +15,9 @@ This a Vidyo.io Android plugin for Cordova. This plugin is built using the Vidyo
  
       cordova plugin add https://github.com/Vidyo/VidyoIOCordovaPlugin.git
       
-## How to create this plugin from scratch
+## How to create this plugin from scratch (optional)
+
+This step is optional and needed only if you want to build the plugin using a different sample than the one i have used.
 
 This section explains how you can build your own Cordova plugin for Vidyo.io using the Android sample application.
 
