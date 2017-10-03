@@ -333,3 +333,5 @@ If the build is successful you can run the application
       
 You can also run the application by manually installing the apk file from VidyoIOHybrid\platforms\android\build\outputs\apk
 On the welcome screen, click on "Launch Vidyo" button to open the Vidyo.IO android activity
+
+## Important: on Android > 6.0 you have to manually grant camera, microphone and storage permissions, otherwise app will crash.
