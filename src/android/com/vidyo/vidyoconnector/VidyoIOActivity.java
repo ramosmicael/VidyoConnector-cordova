@@ -136,8 +136,7 @@ public class VidyoIOActivity extends Activity implements
     }
     public void OnLocalCameraRemoved(VidyoLocalCamera localCamera)  { /* Existing camera became unavailable */          }
     public void OnLocalCameraSelected(VidyoLocalCamera localCamera) {
-        Toast.makeText(mSelf,"Forcing resolution",Toast.LENGTH_LONG).show();
-        localCamera.SetMaxConstraint(176,144,0);
+       
     /* Camera was selected by user or automatically */ }
     public void OnLocalCameraStateUpdated(VidyoLocalCamera localCamera, VidyoDevice.VidyoDeviceState state) { /* Camera state was updated */ }
 
