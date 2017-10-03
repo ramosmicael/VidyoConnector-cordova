@@ -9,3 +9,15 @@ This a Vidyo.io Android plugin for Cordova. This plugin is built using the Vidyo
  OR,
  
       cordova plugin add https://github.com/Vidyo/VidyoIOCordovaPlugin.git
+      
+## How to create this plugin from scratch
+
+This section explains how you can build your own Cordova plugin for Vidyo.io using the Android sample application.
+
+### Prerequisites
+- Download the Android SDK from https://vidyo.io. This SDK contains a sample application.
+- npm - Node.js package manager. I have used NodeJS version 6.9.1. Download from - https://nodejs.org/en/
+
+####Install Cordova Plugin manager
+>$ npm install -g plugman
+ 
