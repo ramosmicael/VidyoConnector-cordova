@@ -171,6 +171,7 @@ android:label="@string/app_name" >
 Finally create the plugin package file so that it can be imported in to a Cordova project
 
 > plugman createpackagejson /path/to/your/pluginfolder
+
 > Example: plugman createpackagejson C:\CordovaPlugins\VidyoIOPlugin
 
 Your plugin is Ready!
