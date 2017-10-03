@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-import com.vidyo.vidyoiohybrid.R;
+
 
 import com.vidyo.VidyoClient.Connector.VidyoConnector;
 import com.vidyo.VidyoClient.Connector.Connector;
