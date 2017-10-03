@@ -4,7 +4,7 @@ This is a Vidyo.io Android plugin for Cordova. This plugin is built using the Vi
 
 - [How to use this plugin](#how-to-use)
 - [Sample Cordova project using this Plugin](#how-to-import-this-plugin-in-to-a-cordova-project)
-- [How to create this plugin from scratch](#how-to-create-this-plugin-from-scratch)
+- [How to create this plugin from scratch (optional)](#how-to-create-this-plugin-from-scratch)
 
 
 ## How to use
