@@ -68,7 +68,7 @@
 		<source-file src="src/android/res/mipmap-xxhdpi/ic_launcher.png" target-dir="res/mipmap-xxhdpi" />
 		
 		<source-file src="src/android/res/values/dimens.xml" target-dir="res/values" />
-		<source-file src="src/android/res/values/strings.xml" target-dir="res/values" />
+		<source-file src="src/android/res/values/strings2.xml" target-dir="res/values" />
 		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 		<source-file src="src/android/res/values-w820dp/dimens.xml" target-dir="res/values-w820dp" />
 		
