@@ -137,7 +137,7 @@ function new_activity() {
 
 Few more changes before we can build the project
 
-In VidyoIOHybrid\platforms\android\res\values\ folder you will have strings.xml and strings2.xml. Merge these files in to a single file strings.xml
+In VidyoIOHybrid\platforms\android\res\values\ folder you will have strings.xml and strings2.xml. Merge these files in to a single file strings.xml and delete strings2.xml
 
 add an additional import to VidyoIOHybrid\platforms\android\src\com\vidyo\vidyoconnector\VidyoIOActivity.java
 
