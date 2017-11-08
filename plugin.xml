@@ -7,7 +7,8 @@
 	<platform name="android">
 		<!--preference name="android-manifest/application/@android:name" value="com.vidyo.vidyoconnector.VidyoConnector" /-->
 		<config-file parent="/*" target="res/xml/config.xml">
-			<feature name="VidyoIOPlugin"><param name="android-package" value="com.vidyo.plugin.VidyoIOPlugin" />
+			<feature name="VidyoIOPlugin">
+				<param name="android-package" value="com.vidyo.plugin.VidyoIOPlugin" />
 			</feature>
 		</config-file>
 		<config-file parent="/manifest" target="AndroidManifest.xml">
@@ -45,19 +46,19 @@
 		<source-file src="src/android/lib/android/x86/libVidyoClient.so" target-dir="libs/x86" />
 		<source-file src="src/android/lib/android/x86_64/libVidyoClient.so" target-dir="libs/x86_64" />
 		
-		<source-file src="src/android/res/drawable/callend.png" target-dir="res/drawable" />
-		<source-file src="src/android/res/drawable/callstart.png" target-dir="res/drawable" />
-		<source-file src="src/android/res/drawable/camera_off.png" target-dir="res/drawable" />
-		<source-file src="src/android/res/drawable/camera_switch.png" target-dir="res/drawable" />
-		<source-file src="src/android/res/drawable/cameraonwhite.png" target-dir="res/drawable" />
-		<source-file src="src/android/res/drawable/microphoneoff.png" target-dir="res/drawable" />
-		<source-file src="src/android/res/drawable/microphoneonwhite.png" target-dir="res/drawable" />
+		<source-file src="res/callend.png" target-dir="res/drawable" />
+		<source-file src="res/callstart.png" target-dir="res/drawable" />
+		<source-file src="res/camera_off.png" target-dir="res/drawable" />
+		<source-file src="res/camera_switch.png" target-dir="res/drawable" />
+		<source-file src="res/cameraonwhite.png" target-dir="res/drawable" />
+		<source-file src="res/microphoneoff.png" target-dir="res/drawable" />
+		<source-file src="res/microphoneonwhite.png" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/rounded_border_edittext.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/toggle_camera_privacy.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/toggle_connect.xml" target-dir="res/drawable" />
 		<source-file src="src/android/res/drawable/toggle_mic_privacy.xml" target-dir="res/drawable" />
-		<source-file src="src/android/res/drawable/vidyo_io_icon.png" target-dir="res/drawable" />
-		<source-file src="src/android/res/drawable/vidyo_io_vertical_dark_at_2x.png" target-dir="res/drawable" />
+		<source-file src="res/vidyo_io_icon.png" target-dir="res/drawable" />
+		<source-file src="res/vidyo_io_vertical_dark_at_2x.png" target-dir="res/drawable" />
 		
 		<source-file src="src/android/res/layout/activity_main.xml" target-dir="res/layout" />
 		<source-file src="src/android/res/menu/menu_main.xml" target-dir="res/menu" />
@@ -72,6 +73,68 @@
 		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 		<source-file src="src/android/res/values-w820dp/dimens.xml" target-dir="res/values-w820dp" />
 		
+	</platform>
+
+	<platform name="ios">
+
+		<config-file target="config.xml" parent="/*">
+			<feature name="VidyoIOPlugin">
+				<param name="ios-package" value="VidyoIOPlugin" onload="true"/>
+			</feature>
+		</config-file>
+		
+		<config-file target="Entitlements-*.plist" parent="keychain-access-groups">
+			<array>
+				<string>$(AppIdentifierPrefix)VidyoLicense</string>
+				<string>$(AppIdentifierPrefix)com.example.VidyoConnector</string>
+			</array>
+		</config-file>
+
+        <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
+            <string>Used for Video Conferencing</string>
+        </config-file>
+
+		<config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>Used for Video Conferencing</string>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>audio</string>
+                <string>voip</string>
+            </array>
+        </config-file>
+
+		<config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
+        </config-file>
+
+		<framework src="UIKit.framework"/>
+		<framework src="src/ios/lib/VidyoClientIOS.framework" custom="true"  />
+
+		<header-file src="src/ios/vidyoconnector/Logger.h" />
+        <source-file src="src/ios/vidyoconnector/Logger.m" />
+		<header-file src="src/ios/vidyoconnector/VidyoViewController.h" />
+        <source-file src="src/ios/vidyoconnector/VidyoViewController.m" />
+		
+		<resource-file src="res/callstart.png" />
+		<resource-file src="res/callend.png" />
+		<resource-file src="res/camera_off.png" />
+		<resource-file src="res/cameraonwhite.png" />
+		<resource-file src="res/microphoneoff.png" />
+		<resource-file src="res/microphoneonwhite.png" />
+		<resource-file src="res/camera_switch.png" />
+		<resource-file src="res/vidyo_io_icon.png" />
+		<resource-file src="res/vidyo_io_vertical_dark_at_2x.png" />
+		<resource-file src="src/ios/res/close.png" />
+		<resource-file src="src/ios/res/Settings.bundle" />
+		<resource-file src="src/ios/res/Vidyo.storyboard" />
+
+		<header-file src="src/ios/VidyoIOPlugin.h" />
+        <source-file src="src/ios/VidyoIOPlugin.m" />
 
 	</platform>
 </plugin>
