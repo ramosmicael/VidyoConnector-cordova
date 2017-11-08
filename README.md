@@ -1,10 +1,11 @@
 # VidyoIOCordovaPlugin
 
-This is a Vidyo.io Android plugin for Cordova. This plugin is built using the Vidyo.io Android sample available @ https://vidyo.io. 
+This is a Vidyo.io Android and iOS plugin for Cordova. This plugin is built using the Vidyo.io Android sample available @ https://vidyo.io. 
 
 - [How to use this plugin](#how-to-use)
 - [Sample Cordova project using this Plugin](#how-to-import-this-plugin-in-to-a-cordova-project)
 - [How to create this plugin from scratch (optional)](#how-to-create-this-plugin-from-scratch)
+- [iOS](#iOS)
 
 
 ## How to use
@@ -90,7 +91,6 @@ Cordova application's main page is rendered using an html file - VidyoIOHybrid/w
 </html>
 
 ```
-
 Next edit the VidyoIOHybrid/www/js/index.js and define the onclick event for the button we just added.
 
 ```
@@ -134,6 +134,7 @@ function new_activity() {
 }
 
 ```
+#### Android
 
 Few more changes before we can build the project
 
@@ -173,7 +174,6 @@ You can also run the application by manually installing the apk file from VidyoI
 On the welcome screen, click on "Launch Vidyo" button to open the Vidyo.IO android activity
 
 ## Important: on Android > 6.0 you have to manually grant camera, microphone and storage permissions, otherwise app will crash.
-
 ## How to create this plugin from scratch (optional)
 
 This step is optional and needed only if you want to build the plugin using a different sample than the one i have used.
@@ -342,3 +342,32 @@ Finally create the plugin package file so that it can be imported in to a Cordov
 
 Your plugin is Ready!
 
+## iOS
+
+### Prerequisites
+
+- MacOS
+- Xcode if you want to debug the application
+- iOS Vidyo SDK (https://developer.vidyo.io/packages and move VidyoClientIOS.framework in src/ios/lib folder)
+
+#### Add iOS platform to the plugin by typing the following command
+>$ cd VidyoIOPlugin
+
+>$ plugman platform add --platform_name ios
+
+#### After plugin added to the app
+In Xcode, click on project, in general add VidyoClientIOS.framework in "Embedded Binaries"
+
+Make sure you have an Entitlements file with : 
+```
+<dict>
+    <key>keychain-access-groups</key>
+    <array>
+      <string>$(AppIdentifierPrefix)VidyoLicense</string>
+      <string>$(AppIdentifierPrefix)com.example.VidyoConnector</string>
+    </array>
+ </dict>
+ ```
+ remplace "com.example.VidyoConnector" by your Application ID
+ 
+ Now you can build the project
