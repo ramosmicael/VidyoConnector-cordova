@@ -1,9 +1,14 @@
 package com.vidyo.vidyoconnector;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewTreeObserver;
@@ -18,12 +23,16 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.vidyo.vidyoiohybrid.R;
+
 
 import com.vidyo.VidyoClient.Connector.VidyoConnector;
 import com.vidyo.VidyoClient.Connector.Connector;
 import com.vidyo.VidyoClient.Device.VidyoDevice;
 import com.vidyo.VidyoClient.Device.VidyoLocalCamera;
 import com.vidyo.VidyoClient.Endpoint.VidyoLogRecord;
+
+import static android.content.ContentValues.TAG;
 
 public class VidyoIOActivity extends Activity implements
         VidyoConnector.IConnect,
@@ -102,6 +111,7 @@ public class VidyoIOActivity extends Activity implements
 
     @Override
     protected void onStart() {
+        this.isStoragePermissionGranted();
         mLogger.Log("onStart");
         super.onStart();
 
@@ -444,5 +454,33 @@ public class VidyoIOActivity extends Activity implements
     // Handle a message being logged.
     public void OnLog(VidyoLogRecord logRecord) {
         mLogger.LogClientLib(logRecord.message);
+    }
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            Log.v(TAG,"Permission: "+permissions[0]+ "was "+grantResults[0]);
+            //resume tasks needing this permission
+        }
     }
 }
