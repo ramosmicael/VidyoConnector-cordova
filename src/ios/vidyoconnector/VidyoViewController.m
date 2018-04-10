@@ -369,16 +369,17 @@
         [vc disconnect];
     } else {
         // Abort the Connect call if resourceId is invalid. It cannot contain empty spaces or "@".
+        NSString *trimmedResourceId = [[resourceId text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if ( [[resourceId text] containsString:@" "] || [[resourceId text] containsString:@"@"] ) {
             [toolbarStatusText setText:@"Invalid Resource ID"];
         } else {
             [toolbarStatusText setText:@"Connecting..."];
-            BOOL status = [vc connect:[host.text UTF8String]
-                                Token:[token.text UTF8String]
-                          DisplayName:[displayName.text UTF8String]
-                           ResourceId:[resourceId.text UTF8String]
-                              Connect:self];
-            
+            BOOL status = [vc connect:[[[host text] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]] UTF8String]
+                                Token:[[[token text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] UTF8String]
+                          DisplayName:[[[displayName text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] UTF8String]
+                           ResourceId:[trimmedResourceId UTF8String]
+                    ConnectorIConnect:self];
+
             if (status == NO) {
                 [self ConnectorStateUpdated:VC_CONNECTION_FAILURE statusText:@"Connection failed"];
             } else {
@@ -392,7 +393,7 @@
         }
     }
 }
-    
+
     // Toggle the microphone privacy
 - (IBAction)microphonePrivacyButtonPressed:(id)sender {
     microphonePrivacy = !microphonePrivacy;

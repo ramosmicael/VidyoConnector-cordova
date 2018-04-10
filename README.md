@@ -356,7 +356,14 @@ Your plugin is Ready!
 >$ plugman platform add --platform_name ios
 
 #### After plugin added to the app
-In Xcode, click on project, in general add VidyoClientIOS.framework in "Embedded Binaries"
+In Xcode, click on project, in General settings, add the following to "Linked Frameworks and Libraries":
+- VidyoClientIOS.framework
+- AVFoundation.framework
+- AudioToolbox.framework
+- CoreLocation.framework
+- CoreMedia.framework
+- SystemConfiguration.framework
+- UIKit.framework
 
 Make sure you have an Entitlements file with : 
 ```
@@ -368,6 +375,6 @@ Make sure you have an Entitlements file with :
     </array>
  </dict>
  ```
- remplace "com.example.VidyoConnector" by your Application ID
+ replace "com.example.VidyoConnector" by your Application ID
  
  Now you can build the project

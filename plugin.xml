@@ -112,6 +112,11 @@
             </dict>
         </config-file>
 
+		<framework src="AVFoundation.framework"/>
+		<framework src="AudioToolbox.framework"/>
+		<framework src="CoreLocation.framework"/>
+		<framework src="CoreMedia.framework"/>
+		<framework src="SystemConfiguration.framework"/>
 		<framework src="UIKit.framework"/>
 		<framework src="src/ios/lib/VidyoClientIOS.framework" custom="true"  />
 

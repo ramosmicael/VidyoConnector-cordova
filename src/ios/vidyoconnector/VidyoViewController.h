@@ -18,7 +18,7 @@ enum VIDYO_CONNECTOR_STATE {
     VC_CONNECTION_FAILURE
 };
 
-@interface VidyoViewController : UIViewController <UITextFieldDelegate, VCIConnect, VCIRegisterLogEventListener> {
+@interface VidyoViewController : UIViewController <UITextFieldDelegate, VCConnectorIConnect, VCConnectorIRegisterLogEventListener> {
 @private
     VCConnector *vc;
     Logger    *logger;
