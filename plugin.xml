@@ -61,18 +61,17 @@
 		<source-file src="res/vidyo_io_vertical_dark_at_2x.png" target-dir="res/drawable" />
 		
 		<source-file src="src/android/res/layout/activity_main.xml" target-dir="res/layout" />
-		<source-file src="src/android/res/menu/menu_main.xml" target-dir="res/menu" />
-		
+				
 		<source-file src="src/android/res/mipmap-hdpi/ic_launcher.png" target-dir="res/mipmap-hdpi" />
 		<source-file src="src/android/res/mipmap-mdpi/ic_launcher.png" target-dir="res/mipmap-mdpi" />
 		<source-file src="src/android/res/mipmap-xhdpi/ic_launcher.png" target-dir="res/mipmap-xhdpi" />
 		<source-file src="src/android/res/mipmap-xxhdpi/ic_launcher.png" target-dir="res/mipmap-xxhdpi" />
 		
 		<source-file src="src/android/res/values/dimens.xml" target-dir="res/values" />
-		<source-file src="src/android/res/values/strings2.xml" target-dir="res/values" />
 		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 		<source-file src="src/android/res/values-w820dp/dimens.xml" target-dir="res/values-w820dp" />
-		
+
+		<framework src="com.android.support:appcompat-v7:23.0.0" />		
 	</platform>
 
 	<platform name="ios">

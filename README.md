@@ -52,7 +52,7 @@ Cordova application's main page is rendered using an html file - VidyoIOHybrid/w
 ```
 <!DOCTYPE html>
 <html>
-<hea
+<head>
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
@@ -136,32 +136,7 @@ function new_activity() {
 ```
 #### Android
 
-Few more changes before we can build the project
-
-In VidyoIOHybrid\platforms\android\res\values\ folder you will have strings.xml and strings2.xml. Merge these files in to a single file strings.xml and delete strings2.xml
-
-add an additional import to VidyoIOHybrid\platforms\android\src\com\vidyo\vidyoconnector\VidyoIOActivity.java
-
-```
-import com.vidyo.vidyoiohybrid.R;
-
-```
-
-In VidyoIOHybrid\platforms\android\build.gradle modify the "dependencies" section and add an entry for com.android.support:appcompat-v7:23.0.0
-
-```
-dependencies {
-compile fileTree(dir: 'libs', include: '*.jar')
-compile 'com.android.support:appcompat-v7:23.0.0'
-// SUB-PROJECT DEPENDENCIES START
-debugCompile(project(path: "CordovaLib", configuration: "debug"))
-releaseCompile(project(path: "CordovaLib", configuration: "release"))
-// SUB-PROJECT DEPENDENCIES END
-}
-
-```
-
-Now it's time to build the project
+Build the project
 
       $ cd VidyoIOHybrid
       $ cordova build android
@@ -173,7 +148,6 @@ If the build is successful you can run the application
 You can also run the application by manually installing the apk file from VidyoIOHybrid\platforms\android\build\outputs\apk
 On the welcome screen, click on "Launch Vidyo" button to open the Vidyo.IO android activity
 
-## Important: on Android > 6.0 you have to manually grant camera, microphone and storage permissions, otherwise app will crash.
 ## How to create this plugin from scratch (optional)
 
 This step is optional and needed only if you want to build the plugin using a different sample than the one i have used.
@@ -197,7 +171,7 @@ This section explains how you can build your own Cordova plugin for Vidyo.io usi
 
 #### Now we have to copy a few files from Vidyo.IO sample application to the plugin folder.
 
-- copy the res folder from the sample to VidyoIOPlugin/src/android. make sure to rename res/values/strings.xml to res/values/strings2.xml
+- copy the res folder from the sample to VidyoIOPlugin/src/android.
 - copy the lib folder from the sample to VidyoIOPlugin/src/android
 - copy the com folder from VidyoConnector\android\app\src\main\java to VidyoIOPlugin/src/android
 - We have to refactor the MainActivity.Java file included in the sample to VidyoIOActivity.java and change the class name also to reflect the change. We have to do this because, when we install this plugin in to the Cordova project, Cordova project also has a MainActivity so there will be a conflict.
@@ -205,10 +179,12 @@ This section explains how you can build your own Cordova plugin for Vidyo.io usi
 Next, edit VidyoIOPlugin/src/android/VidyoIOPlugin.java and make sure it looks like the following. Here we are mapping the method "launchVidyoIO" to invoke Vidyo.io activity. We also pass the required parameters to join a Vidyo room.
 
 ```
+
 package com.vidyo.plugin;
- 
+
 import android.content.Context;
 import android.content.Intent;
+
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaWebView;
@@ -216,27 +192,47 @@ import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.vidyo.vidyoconnector.VidyoIOActivity;
- 
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.widget.Toast;
+
 /**
  * This class echoes a string called from JavaScript.
  */
 public class VidyoIOPlugin extends CordovaPlugin {
- 
+
+    private static final int PERMISSION_REQ_CODE = 0x7b;
+
+    private static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
     }
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity().getApplicationContext();
-        if(action.equals("launchVidyoIO")) {
-            this.openNewActivity(context,args);
+        if (action.equals("launchVidyoIO")) {
+            this.openNewActivity(context, args);
             return true;
         }
         return false;
     }
- 
-    private void openNewActivity(Context context,JSONArray args)  throws JSONException {
+
+    private void openNewActivity(Context context, JSONArray args) throws JSONException {
+        /* Check for required permissions */
+        if (!hasAllPermissions()) {
+            this.cordova.requestPermissions(this, PERMISSION_REQ_CODE, PERMISSIONS);
+            return;
+        }
+
         Intent intent = new Intent(context, VidyoIOActivity.class);
         intent.putExtra("token", args.getString(0));
         intent.putExtra("host", args.getString(1));
@@ -244,8 +240,31 @@ public class VidyoIOPlugin extends CordovaPlugin {
         intent.putExtra("resourceId", args.getString(3));
         intent.putExtra("hideConfig", true);
         intent.putExtra("autoJoin", true);
- 
+
         this.cordova.getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
+        if (requestCode == PERMISSION_REQ_CODE) {
+            for (int result : grantResults) {
+                if (result == PackageManager.PERMISSION_DENIED) {
+                    Toast.makeText(cordova.getActivity(), "Permissions are not granted!", Toast.LENGTH_SHORT).show();
+                    return; /* quit */
+                }
+            }
+
+            /* Success */
+            Toast.makeText(cordova.getActivity(), "Permissions granted! Please proceed...", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean hasAllPermissions() {
+        for (String permission : PERMISSIONS) {
+            if (!this.cordova.hasPermission(permission)) return false;
+        }
+
+        return true;
     }
 }
 
@@ -320,15 +339,14 @@ android:label="@string/app_name" >
 <source-file src="src/android/res/drawable/vidyo_io_icon.png" target-dir="res/drawable" />
 <source-file src="src/android/res/drawable/vidyo_io_vertical_dark_at_2x.png" target-dir="res/drawable" />
 <source-file src="src/android/res/layout/activity_main.xml" target-dir="res/layout" />
-<source-file src="src/android/res/menu/menu_main.xml" target-dir="res/menu" />
 <source-file src="src/android/res/mipmap-hdpi/ic_launcher.png" target-dir="res/mipmap-hdpi" />
 <source-file src="src/android/res/mipmap-mdpi/ic_launcher.png" target-dir="res/mipmap-mdpi" />
 <source-file src="src/android/res/mipmap-xhdpi/ic_launcher.png" target-dir="res/mipmap-xhdpi" />
 <source-file src="src/android/res/mipmap-xxhdpi/ic_launcher.png" target-dir="res/mipmap-xxhdpi" />
 <source-file src="src/android/res/values/dimens.xml" target-dir="res/values" />
-<source-file src="src/android/res/values/strings2.xml" target-dir="res/values" />
 <source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 <source-file src="src/android/res/values-w820dp/dimens.xml" target-dir="res/values-w820dp" />
+<framework src="com.android.support:appcompat-v7:23.0.0" />
 </platform>
 </plugin>
 

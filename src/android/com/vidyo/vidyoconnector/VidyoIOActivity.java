@@ -66,6 +66,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     private boolean mAutoJoin = false;
     private boolean mAllowReconnect = true;
 
+    private boolean mIsCameraPrivacyOn = false;
+
     private String mReturnURL = null;
 
     private VidyoIOActivity mSelf;
@@ -115,7 +117,6 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
 
     @Override
     protected void onStart() {
-        this.isStoragePermissionGranted();
         mLogger.Log("onStart");
         super.onStart();
 
@@ -191,8 +192,13 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
                         Logger.getInstance().Log("onResume: mVidyoConnectorConstructed => " + (mVidyoConnectorConstructed ? "success" : "failed"));
                     }
 
+                    // Resume camera privacy if selected
+                    if (mVidyoConnector != null) {
+                        mVidyoConnector.setCameraPrivacy(mIsCameraPrivacyOn);
+                    }
+
                     // If configured to auto-join, then simulate a click of the toggle connect button
-                    if (mVidyoConnectorConstructed && mAutoJoin) {
+                    if (mVidyoConnectorConstructed && mAutoJoin && mVidyoConnectorState == VIDYO_CONNECTOR_STATE.VC_DISCONNECTED) {
                         mToggleConnectButton.performClick();
                     }
                 }
@@ -217,15 +223,26 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     @Override
     protected void onStop() {
         mLogger.Log("onStop");
-        if (mVidyoConnector != null)
+        if (mVidyoConnector != null) {
             mVidyoConnector.setMode(Connector.ConnectorMode.VIDYO_CONNECTORMODE_Background);
+            mVidyoConnector.setCameraPrivacy(true);
+        }
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
         mLogger.Log("onDestroy");
-        ConnectorPkg.uninitialize();
+        // ConnectorPkg.uninitialize();
+
+        if (mVidyoConnector != null) {
+            mVidyoConnector.unregisterLogEventListener();
+            mVidyoConnector.unregisterLocalCameraEventListener();
+
+            mVidyoConnector.disable();
+            mVidyoConnector = null;
+        }
+
         super.onDestroy();
     }
 
@@ -250,27 +267,6 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
                 }
             });
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /*
@@ -393,7 +389,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
 
     // Toggle the camera privacy
     public void CameraPrivacyButtonPressed(View v) {
-        mVidyoConnector.setCameraPrivacy(((ToggleButton) v).isChecked());
+        mIsCameraPrivacyOn = ((ToggleButton) v).isChecked();
+        mVidyoConnector.setCameraPrivacy(mIsCameraPrivacyOn);
     }
 
     // Handle the camera swap button being pressed. Cycle the camera.
@@ -445,33 +442,6 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     @Override
     public void onLog(LogRecord logRecord) {
         mLogger.Log(logRecord.message);
-    }
-
-    public boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG, "Permission is granted");
-                return true;
-            } else {
-
-                Log.v(TAG, "Permission is revoked");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        } else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG, "Permission is granted");
-            return true;
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
-            //resume tasks needing this permission
-        }
     }
 
     @Override
