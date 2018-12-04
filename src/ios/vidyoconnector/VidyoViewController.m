@@ -52,8 +52,10 @@
     
     // Initialize the member variables
     vidyoConnectorState = VC_DISCONNECTED;
+    lastSelectedCamera = nil;
     microphonePrivacy = NO;
     cameraPrivacy = NO;
+    devicesSelected = YES;
     
     // Initialize the toggle connect button to the callStartImage
     callStartImage = [UIImage imageNamed:@"callstart.png"];
@@ -102,6 +104,12 @@
         if (experimentalOptions) {
             [vc setAdvancedOptions:[experimentalOptions UTF8String]];
         }
+        
+        // Register for local camera events
+        if (![vc registerLocalCameraEventListener:self]) {
+            [logger Log:@"registerLocalCameraEventListener failed"];
+        }
+        
         // Register for log callbacks
         if (![vc registerLogEventListener:self Filter:"info@VidyoClient info@VidyoConnector warning"]) {
             [logger Log:@"RegisterLogEventListener failed"];
@@ -120,13 +128,13 @@
     // Register for OS notifications about this app running in background/foreground, etc.
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appDidEnterBackground:)
-                                                 name:UIApplicationDidEnterBackgroundNotification
+                                             selector:@selector(appWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appWillEnterForeground:)
-                                                 name:UIApplicationWillEnterForegroundNotification
+                                             selector:@selector(appDidBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -173,30 +181,60 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIKeyboardWillHideNotification
                                                   object:nil];
+    
+    // Deregister from any/all notifications.
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    lastSelectedCamera = nil;
+    
+    // Release all acquired resources
+    [vc disable];
+    vc = nil;
 }
     
 #pragma mark -
 #pragma mark Application Lifecycle
     
-- (void)appDidEnterBackground:(NSNotification*)notification {
-    // Enable camera privacy so remote participants do not see a frozen frame
-    [vc setCameraPrivacy:YES];
-    [vc setMode:VCConnectorModeBackground];
+- (void)appWillResignActive:(NSNotification*)notification {
+    if (vc) {
+        if (vidyoConnectorState == VC_CONNECTED) {
+            // Connected or connecting to a resource.
+            // Enable camera privacy so remote participants do not see a frozen frame.
+            [vc setCameraPrivacy:YES];
+        } else {
+            // Not connected to a resource.
+            // Release camera, mic, and speaker from this app while backgrounded.
+            [vc selectLocalCamera:nil];
+            [vc selectLocalMicrophone:nil];
+            [vc selectLocalSpeaker:nil];
+            devicesSelected = NO;
+        }
+        
+        [vc setMode:VCConnectorModeBackground];
+    }
 }
     
-- (void)appWillEnterForeground:(NSNotification*)notification {
-    [vc setMode:VCConnectorModeForeground];
-    
-    // Check if camera privacy should be disabled
-    if (!cameraPrivacy) {
-        [vc setCameraPrivacy:NO];
+- (void)appDidBecomeActive:(NSNotification*)notification {
+    if (vc) {
+        [vc setMode:VCConnectorModeForeground];
+        
+        if (!devicesSelected) {
+            // Devices have been released when backgrounding (in appWillResignActive). Re-select them.
+            devicesSelected = YES;
+            
+            // Select the previously selected local camera and default mic/speaker
+            [vc selectLocalCamera:lastSelectedCamera];
+            [vc selectDefaultMicrophone];
+            [vc selectDefaultSpeaker];
+        }
+        
+        // Reestablish camera and microphone privacy states
+        [vc setCameraPrivacy: cameraPrivacy];
+        [vc setMicrophonePrivacy: microphonePrivacy];
     }
 }
     
 - (void)appWillTerminate:(NSNotification*)notification {
-    // Deregister from any/all notifications.
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
     // Uninitialize VidyoConnector
     [VCConnectorPkg uninitialize];
     
@@ -453,6 +491,26 @@
         [logger Log:@"Unexpected disconnection."];
         [self ConnectorStateUpdated:VC_DISCONNECTED_UNEXPECTED statusText:@"Unexepected disconnection"];
     }
+}
+
+// Implementation of VCConnectorIRegisterLocalCameraEventListener
+-(void) onLocalCameraAdded:(VCLocalCamera*)localCamera {
+    [logger Log:[NSString stringWithFormat:@"onLocalCameraAdded: %@", [localCamera getName]]];
+}
+-(void) onLocalCameraRemoved:(VCLocalCamera*)localCamera {
+    [logger Log:[NSString stringWithFormat:@"onLocalCameraRemoved: %@", [localCamera getName]]];
+}
+-(void) onLocalCameraSelected:(VCLocalCamera*)localCamera {
+    [logger Log:[NSString stringWithFormat:@"onLocalCameraSelected: %@", localCamera ? [localCamera getName] : @"none"]];
+    
+    // If a camera is selected, then update lastSelectedCamera.
+    // localCamera will be nil only when backgrounding app while disconnected.
+    if (localCamera) {
+        lastSelectedCamera = localCamera;
+    }
+}
+-(void) onLocalCameraStateUpdated:(VCLocalCamera*)localCamera State:(VCDeviceState)state {
+    [logger Log:[NSString stringWithFormat:@"onLocalCameraStateUpdated: name=%@ state=%ld", [localCamera getName], (long)state]];
 }
     
     // Handle a message being logged.

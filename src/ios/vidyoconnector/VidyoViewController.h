@@ -18,14 +18,16 @@ enum VIDYO_CONNECTOR_STATE {
     VC_CONNECTION_FAILURE
 };
 
-@interface VidyoViewController : UIViewController <UITextFieldDelegate, VCConnectorIConnect, VCConnectorIRegisterLogEventListener> {
+@interface VidyoViewController : UIViewController <UITextFieldDelegate, VCConnectorIConnect, VCConnectorIRegisterLocalCameraEventListener, VCConnectorIRegisterLogEventListener> {
 @private
     VCConnector *vc;
+    VCLocalCamera *lastSelectedCamera;
     Logger    *logger;
     UIImage   *callStartImage;
     UIImage   *callEndImage;
     BOOL      microphonePrivacy;
     BOOL      cameraPrivacy;
+    BOOL      devicesSelected;
     BOOL      hideConfig;
     BOOL      autoJoin;
     BOOL      allowReconnect;
