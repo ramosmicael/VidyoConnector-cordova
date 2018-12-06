@@ -30,23 +30,27 @@ public class VidyoIOPlugin extends CordovaPlugin {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    private JSONArray launchVidyoIOArguments;
+
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
     }
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        Context context = cordova.getActivity().getApplicationContext();
         if (action.equals("launchVidyoIO")) {
-            this.openNewActivity(context, args);
+            this.openNewActivity(args);
             return true;
         }
         return false;
     }
 
-    private void openNewActivity(Context context, JSONArray args) throws JSONException {
+    private void openNewActivity(JSONArray args) throws JSONException {
+        Context context = cordova.getActivity().getApplicationContext();
+
         /* Check for required permissions */
         if (!hasAllPermissions()) {
+            this.launchVidyoIOArguments = args;
             this.cordova.requestPermissions(this, PERMISSION_REQ_CODE, PERMISSIONS);
             return;
         }
@@ -73,7 +77,10 @@ public class VidyoIOPlugin extends CordovaPlugin {
             }
 
             /* Success */
-            Toast.makeText(cordova.getActivity(), "Permissions granted! Please proceed...", Toast.LENGTH_SHORT).show();
+            if (launchVidyoIOArguments != null) {
+                this.openNewActivity(launchVidyoIOArguments);
+                this.launchVidyoIOArguments = null;
+            }
         }
     }
 

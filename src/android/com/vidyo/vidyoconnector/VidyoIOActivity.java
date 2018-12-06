@@ -168,7 +168,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
                                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/VidyoIOAndroid.log",
                                     0);
                             mLogger.Log("Version is " + mVidyoConnector.getVersion());
-                            mVidyoConnector.enableDebug(0, "");
+
                             if (mVidyoConnector != null) {
                                 mVidyoConnectorConstructed = true;
 
