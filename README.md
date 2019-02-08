@@ -14,7 +14,7 @@ This is a Vidyo.io Android and iOS plugin for Cordova. This plugin is built usin
       
  OR,
  
-      cordova plugin add https://github.com/Vidyo/VidyoIOCordovaPlugin.git
+      cordova plugin add https://github.com/Vidyo/VidyoConnector-cordova.git
       
 
 
