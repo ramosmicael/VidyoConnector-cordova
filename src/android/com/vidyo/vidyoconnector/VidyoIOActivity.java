@@ -76,9 +76,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
      *  Operating System Events
      */
     
-    
-    public void initialize(CordovaInterface cordova, CordovaWebView webView)
-    {
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
     }
     
