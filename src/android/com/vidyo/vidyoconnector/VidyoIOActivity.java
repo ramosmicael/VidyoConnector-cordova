@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-/*import com.vidyo.vidyoiohybrid.R;*/
+import com.vidyo.vidyoiohybrid.R;
 
 import com.vidyo.VidyoClient.Connector.Connector;
 import com.vidyo.VidyoClient.Connector.ConnectorPkg;
@@ -76,19 +76,13 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
      *  Operating System Events
      */
     
-    @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-    }
-    
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mLogger.Log("onCreate");
         super.onCreate(savedInstanceState);
 
-        setContentView(webView.getContext());
+        setContentView(R.layout.activity_main);
 
         // Initialize the member variables
         mToggleConnectButton = (ToggleButton) findViewById(R.id.toggleConnectButton);
