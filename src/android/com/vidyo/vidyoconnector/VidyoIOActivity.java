@@ -32,7 +32,7 @@ import com.vidyo.VidyoClient.Endpoint.LogRecord;
 
 import static android.content.ContentValues.TAG;
 
-public class VidyoIOActivity extends Activity implements Connector.IConnect, Connector.IRegisterLogEventListener, Connector.IRegisterLocalCameraEventListener {
+public class VidyoIOActivity extends Activity,CordovaPlugin implements Connector.IConnect, Connector.IRegisterLogEventListener, Connector.IRegisterLocalCameraEventListener {
 
     enum VIDYO_CONNECTOR_STATE {
         VC_CONNECTED,
