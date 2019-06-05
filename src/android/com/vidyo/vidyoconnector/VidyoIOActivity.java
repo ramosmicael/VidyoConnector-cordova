@@ -242,12 +242,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mVidyoConnector.unregisterLocalCameraEventListener();
 
             if (mWebView != null)
-        
-                
-            mVidyoConnector.handlePause(true);
-            mVidyoConnector.handleDestroy();
-        
-            
+   
             mVidyoConnector.disable();
             mVidyoConnector = null;
         }
@@ -388,6 +383,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mToolbarStatus.setText("Disconnecting...");
 
             mVidyoConnector.disconnect();
+            
+            this.hideCustomView();
         }
     }
 
