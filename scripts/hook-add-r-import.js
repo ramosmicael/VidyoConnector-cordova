@@ -34,7 +34,8 @@ module.exports = function(ctx) {
         console.log("Adding import for R.java");
          
         var appPackage = configobj.installed_plugins[ctx.opts.plugin.id]['PACKAGE_NAME'];
-
+        console.log("With the package name: "+appPackage);
+       
         replace_string_in_file(val,"import com.vidyo.vidyoiohybrid.R;","import " + appPackage +".R;");
 
       } else {
