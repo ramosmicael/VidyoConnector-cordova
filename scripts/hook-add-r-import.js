@@ -32,7 +32,9 @@ module.exports = function(ctx) {
         var packageName = configobj.installed_plugins["com.medtronic.plugin.VidyoIOPlugin"]["PACKAGE_NAME"];
         console.log("With the package name: "+packageName);
         console.log("Adding import for R.java");
-          replace_string_in_file(val,"package com.vidyo.vidyoconnector;","package com.vidyo.vidyoconnector;\n\nimport "+packageName+".R;");
+         
+       
+        replace_string_in_file(val,"import com.vidyo.vidyoiohybrid.R;","import packageName+".R;");
 
       } else {
           console.log("No android platform found! :(");
