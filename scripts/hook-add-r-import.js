@@ -29,12 +29,13 @@ module.exports = function(ctx) {
         console.log("Android platform available !");
         
         //Getting the package name from the android.json file,replace with your plugin's id
-        var packageName = configobj.installed_plugins["com.medtronic.plugin.VidyoIOPlugin"]["PACKAGE_NAME"];
+        /*var packageName = configobj.installed_plugins["com.medtronic.plugin.VidyoIOPlugin"]["PACKAGE_NAME"];*/
         console.log("With the package name: "+packageName);
         console.log("Adding import for R.java");
          
-       
-        replace_string_in_file(val,"import com.vidyo.vidyoiohybrid.R;","import packageName+".R;");
+        var appPackage = configobj.installed_plugins[ctx.opts.plugin.id]['PACKAGE_NAME'];
+
+        replace_string_in_file(val,"import com.vidyo.vidyoiohybrid.R;","import " + appPackage +".R;");
 
       } else {
           console.log("No android platform found! :(");
