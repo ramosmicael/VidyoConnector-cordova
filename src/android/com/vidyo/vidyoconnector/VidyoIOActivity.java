@@ -379,6 +379,9 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mToggleConnectButton.setChecked(true);
 
             mToolbarStatus.setText("Disconnecting...");
+            
+            
+            mVidyoConnector.disconnect();
 
         }
     }
