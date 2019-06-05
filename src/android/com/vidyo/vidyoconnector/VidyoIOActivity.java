@@ -385,6 +385,20 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
 
         }
     }
+    
+    // hide the plugin
+    public void hide() {
+        
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Fragment fragment = cordova.getActivity().getFragmentManager().findFragmentById(resources.getIdentifier("container", "id", packageName));
+                cordova.getActivity().getFragmentManager().beginTransaction().remove(fragment).commit();
+                cordova.getActivity().setContentView(getView());
+            }
+        });
+    }
+    
 
     // Toggle the microphone privacy
     public void MicrophonePrivacyButtonPressed(View v) {
