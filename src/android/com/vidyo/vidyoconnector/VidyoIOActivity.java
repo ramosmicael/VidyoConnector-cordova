@@ -240,8 +240,6 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
         if (mVidyoConnector != null) {
             mVidyoConnector.unregisterLogEventListener();
             mVidyoConnector.unregisterLocalCameraEventListener();
-
-            if (mWebView != null)
    
             mVidyoConnector.disable();
             mVidyoConnector = null;
