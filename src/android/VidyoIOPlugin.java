@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.view.WindowManager;
+
 import com.vidyo.vidyoconnector.VidyoIOActivity;
 
 import android.Manifest;
