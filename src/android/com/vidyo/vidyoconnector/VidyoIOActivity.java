@@ -126,8 +126,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
         Intent intent = getIntent();
         mHost.setText(intent.hasExtra("host") ? intent.getStringExtra("host") : "prod.vidyo.io");
         mToken.setText(intent.hasExtra("token") ? intent.getStringExtra("token") : "cHJvdmlzaW9uAHN1bWl0QGRkYTg0MC52aWR5by5pbwA2MzY1ODg4MTAyOAAAMTYyNGJmM2IwMGQ3ODdjNmFkNGIyNzE3YTgxNTlkMGUzMDA3NzQxZTZkOWQzYjEwMTY4ZTMxMWZhZDE4MmMxNmVmOWQwNmQyZDQxMGZjMGUzMzUyZDg5ZWQ5Mzk5NDc3");
-        mDisplayName.setText(intent.hasExtra("displayName") ? intent.getStringExtra("displayName") : "");
-        mResourceId.setText(intent.hasExtra("resourceId") ? intent.getStringExtra("resourceId") : "demoRoom");
+        mDisplayName.setText(intent.hasExtra("displayName") ? intent.getStringExtra("displayName") : "AnonymousUser");
+        mResourceId.setText(intent.hasExtra("resourceId") ? intent.getStringExtra("resourceId") : "Appointment");
         mReturnURL = intent.hasExtra("returnURL") ? intent.getStringExtra("returnURL") : null;
         mHideConfig = intent.getBooleanExtra("hideConfig", false);
         mAutoJoin = intent.getBooleanExtra("autoJoin", false);
@@ -222,7 +222,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
 
     }
 
-    @Override
+    /*@Override
     protected void onStop() {
         mLogger.Log("onStop");
         if (mVidyoConnector != null) {
@@ -230,9 +230,28 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mVidyoConnector.setCameraPrivacy(true);
         }
         super.onStop();
+    }*/
+    
+     @Override
+    protected void onStop() {
+        mLogger.Log("onStop");
+        super.onStop();
+
+        if (mVidyoConnector != null) {
+            if (mVidyoConnectorState != VidyoConnectorState.Connected &&
+                mVidyoConnectorState != VidyoConnectorState.Connecting) {
+                // Not connected/connecting to a resource.
+                // Release camera, mic, and speaker from this app while backgrounded.
+                mVidyoConnector.selectLocalCamera(null);
+                mVidyoConnector.selectLocalMicrophone(null);
+                mVidyoConnector.selectLocalSpeaker(null);
+                mDevicesSelected = false;
+            }
+            mVidyoConnector.setMode(Connector.ConnectorMode.VIDYO_CONNECTORMODE_Background);
+        }
     }
 
-    @Override
+    /*@Override
     protected void onDestroy() {
         mLogger.Log("onDestroy");
         // ConnectorPkg.uninitialize();
@@ -246,6 +265,26 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
         }
 
         super.onDestroy();
+    }*/
+    
+    @Override
+    protected void onDestroy() {
+        mLogger.Log("onDestroy");
+        super.onDestroy();
+
+        // Release device resources
+        mLastSelectedCamera = null;
+        if (mVidyoConnector != null) {
+            mVidyoConnector.disable();
+        }
+
+        // Connector will be destructed upon garbage collection.
+        mVidyoConnector = null;
+
+        ConnectorPkg.setApplicationUIContext(null);
+
+        // Uninitialize the VidyoClient library - this should be done once in the lifetime of the application.
+        ConnectorPkg.uninitialize();
     }
 
     // The device interface orientation has changed
