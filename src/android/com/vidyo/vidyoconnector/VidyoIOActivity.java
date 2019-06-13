@@ -385,7 +385,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
           
             mVidyoConnector.disconnect();
             
-            System.exit(0);
+            //System.exit(0);
+            super.onBackPressed();
 
         }
     }
