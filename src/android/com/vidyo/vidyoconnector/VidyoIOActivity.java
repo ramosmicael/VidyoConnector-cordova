@@ -235,7 +235,10 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     @Override
     protected void onDestroy() {
         mLogger.Log("onDestroy");
-        // ConnectorPkg.uninitialize();
+        ConnectorPkg.setApplicationUIContext(null);
+
+        // Uninitialize the VidyoClient library - this should be done once in the lifetime of the application.
+        ConnectorPkg.uninitialize();
 
         if (mVidyoConnector != null) {
             mVidyoConnector.unregisterLogEventListener();
