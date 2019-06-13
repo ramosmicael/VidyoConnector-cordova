@@ -385,8 +385,10 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
           
             mVidyoConnector.disconnect();
             
-            //System.exit(0);
-            super.onBackPressed();
+            //super.onBackPressed();
+            
+            int id= android.os.Process.myPid();
+            android.os.Process.killProcess(id);
 
         }
     }
