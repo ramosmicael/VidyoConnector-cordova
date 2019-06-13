@@ -233,10 +233,30 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     }
 
 
+    @Override
+    protected void onDestroy() {
+        mLogger.Log("onDestroy");
+         ConnectorPkg.setApplicationUIContext(null);
+
+        // Uninitialize the VidyoClient library - this should be done once in the lifetime of the application.
+        ConnectorPkg.uninitialize();
+
+        if (mVidyoConnector != null) {
+            mVidyoConnector.unregisterLogEventListener();
+            mVidyoConnector.unregisterLocalCameraEventListener();
+   
+            mVidyoConnector.disable();
+            mVidyoConnector = null;
+        }
+
+        super.onDestroy();
+    }
+    
+    
     /*@Override
     protected void onDestroy() {
         mLogger.Log("onDestroy");
-        // ConnectorPkg.uninitialize();
+         ConnectorPkg.uninitialize();
 
         if (mVidyoConnector != null) {
             mVidyoConnector.unregisterLogEventListener();
@@ -248,26 +268,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
 
         super.onDestroy();
     }*/
-    
-    @Override
-    protected void onDestroy() {
-        mLogger.Log("onDestroy");
-        super.onDestroy();
-
-        // Release device resources
-        mLastSelectedCamera = null;
-        if (mVidyoConnector != null) {
-            mVidyoConnector.disable();
-        }
-
-        // Connector will be destructed upon garbage collection.
-        mVidyoConnector = null;
-
-        ConnectorPkg.setApplicationUIContext(null);
-
-        // Uninitialize the VidyoClient library - this should be done once in the lifetime of the application.
-        ConnectorPkg.uninitialize();
-    }
+   
 
     // The device interface orientation has changed
     @Override
