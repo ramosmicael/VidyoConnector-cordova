@@ -222,7 +222,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
 
     }
 
-    /*@Override
+    @Override
     protected void onStop() {
         mLogger.Log("onStop");
         if (mVidyoConnector != null) {
@@ -230,26 +230,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mVidyoConnector.setCameraPrivacy(true);
         }
         super.onStop();
-    }*/
-    
-     @Override
-    protected void onStop() {
-        mLogger.Log("onStop");
-        super.onStop();
-
-        if (mVidyoConnector != null) {
-            if (mVidyoConnectorState != VidyoConnectorState.Connected &&
-                mVidyoConnectorState != VidyoConnectorState.Connecting) {
-                // Not connected/connecting to a resource.
-                // Release camera, mic, and speaker from this app while backgrounded.
-                mVidyoConnector.selectLocalCamera(null);
-                mVidyoConnector.selectLocalMicrophone(null);
-                mVidyoConnector.selectLocalSpeaker(null);
-                mDevicesSelected = false;
-            }
-            mVidyoConnector.setMode(Connector.ConnectorMode.VIDYO_CONNECTORMODE_Background);
-        }
     }
+
 
     /*@Override
     protected void onDestroy() {
