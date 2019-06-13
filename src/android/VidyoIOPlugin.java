@@ -29,7 +29,8 @@ public class VidyoIOPlugin extends CordovaPlugin {
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.CAMERA,
             Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.WAKE_LOCK
     };
 
     private JSONArray launchVidyoIOArguments;
