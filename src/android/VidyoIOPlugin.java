@@ -23,6 +23,8 @@ import android.widget.Toast;
 public class VidyoIOPlugin extends CordovaPlugin {
 
     private static final int PERMISSION_REQ_CODE = 0x7b;
+    private static final String ACTION_KEEP_AWAKE = "keepAwake";
+    private static final String ACTION_ALLOW_SLEEP_AGAIN = "allowSleepAgain";
 
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.CAMERA,
@@ -40,6 +42,13 @@ public class VidyoIOPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("launchVidyoIO")) {
             this.openNewActivity(args);
+            cordova.getActivity().runOnUiThread(
+            new Runnable() {
+              public void run() {
+                cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+              }
+            });
             return true;
         }
         return false;
@@ -68,6 +77,16 @@ public class VidyoIOPlugin extends CordovaPlugin {
 
     @Override
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
+        
+        cordova.getActivity().runOnUiThread(
+            new Runnable() {
+              public void run() {
+                cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+              }
+            });
+        
+        
         if (requestCode == PERMISSION_REQ_CODE) {
             for (int result : grantResults) {
                 if (result == PackageManager.PERMISSION_DENIED) {
