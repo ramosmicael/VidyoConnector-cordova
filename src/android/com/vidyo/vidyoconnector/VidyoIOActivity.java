@@ -384,6 +384,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mToolbarStatus.setText("Disconnecting...");
           
             mVidyoConnector.disconnect();
+            
+            System.exit(0);
 
         }
     }
