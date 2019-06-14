@@ -51,7 +51,7 @@ public class VidyoIOPlugin extends CordovaPlugin {
             new Runnable() {
               public void run() {
                 cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+                //callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
               }
             });
             
