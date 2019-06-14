@@ -84,6 +84,9 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        
+        // Keep the device awake
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Initialize the member variables
         mToggleConnectButton = (ToggleButton) findViewById(R.id.toggleConnectButton);
@@ -102,9 +105,6 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
         // Suppress keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        // Keep the device awake
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        
         // Initialize the VidyoClient
         ConnectorPkg.setApplicationUIContext(this);
 
