@@ -58,13 +58,13 @@ public class VidyoIOPlugin extends CordovaPlugin {
             
             return true;
         }
-        
+        /*
         cordova.getActivity().runOnUiThread(
             new Runnable() {
               public void run() {
                 cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
               }
-            });
+            });*/
         return false;
     }
 
