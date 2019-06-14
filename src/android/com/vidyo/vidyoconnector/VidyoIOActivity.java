@@ -239,6 +239,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     protected void onDestroy() {
         mLogger.Log("onDestroy");
         ConnectorPkg.setApplicationUIContext(null);
+        
+        cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Uninitialize the VidyoClient library - this should be done once in the lifetime of the application.
         ConnectorPkg.uninitialize();
