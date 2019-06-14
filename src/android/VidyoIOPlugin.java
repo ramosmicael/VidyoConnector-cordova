@@ -43,7 +43,15 @@ public class VidyoIOPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("launchVidyoIO")) {
             this.openNewActivity(args);
-            this.cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            //this.cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            cordova.getActivity().runOnUiThread(
+            new Runnable() {
+              public void run() {
+                cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+              }
+            });
+            
             return true;
         }
         return false;
