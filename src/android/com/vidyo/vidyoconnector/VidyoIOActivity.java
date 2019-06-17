@@ -152,9 +152,10 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     protected void onResume() {
         mLogger.Log("onResume");
         super.onResume();
-
-        cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
+        // ACTION_ALLOW_SLEEP_AGAIN
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         ViewTreeObserver viewTreeObserver = mVideoFrame.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
