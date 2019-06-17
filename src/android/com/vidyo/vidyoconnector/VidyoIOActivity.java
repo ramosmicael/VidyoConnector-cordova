@@ -152,10 +152,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     protected void onResume() {
         mLogger.Log("onResume");
         super.onResume();
-        
-        // ACTION_ALLOW_SLEEP_AGAIN
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+    
         ViewTreeObserver viewTreeObserver = mVideoFrame.getViewTreeObserver();
         if (viewTreeObserver.isAlive()) {
             viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -242,9 +239,9 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     protected void onDestroy() {
         mLogger.Log("onDestroy");
         ConnectorPkg.setApplicationUIContext(null);
-        
-        //TODO
-        //cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // ACTION_ALLOW_SLEEP_AGAIN
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Uninitialize the VidyoClient library - this should be done once in the lifetime of the application.
         ConnectorPkg.uninitialize();
