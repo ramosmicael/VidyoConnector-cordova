@@ -388,6 +388,9 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mToggleConnectButton.setChecked(true);
 
             mToolbarStatus.setText("Disconnecting...");
+            
+            // FLAG_KEEP_SCREEN_ON
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
           
             mVidyoConnector.disconnect();
             
