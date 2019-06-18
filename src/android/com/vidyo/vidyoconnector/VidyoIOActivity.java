@@ -253,6 +253,9 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mVidyoConnector.disable();
             mVidyoConnector = null;
         }
+        
+        // TODO: FLAG_KEEP_SCREEN_ON - NOT WORK
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         super.onDestroy();
     }
@@ -388,10 +391,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mToggleConnectButton.setChecked(true);
 
             mToolbarStatus.setText("Disconnecting...");
-            
-            // FLAG_KEEP_SCREEN_ON
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-          
+
             mVidyoConnector.disconnect();
             
             super.onBackPressed();
