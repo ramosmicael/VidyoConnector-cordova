@@ -85,15 +85,15 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
 
         // PrivacyScreenPlugin
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
+        
+        //MR 200190731
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
         
         setContentView(R.layout.activity_main);
         
         // Keep the device awake
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         
-        
-
         // Initialize the member variables
         mToggleConnectButton = (ToggleButton) findViewById(R.id.toggleConnectButton);
         mControlsLayout = (LinearLayout) findViewById(R.id.controlsLayout);
