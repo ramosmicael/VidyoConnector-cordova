@@ -22,9 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-/*import com.vidyo.vidyoiohybrid.R;*/
-
-import com.outsystemsenterprise.medtronicdev.R;
+import com.vidyo.vidyoiohybrid.R;
+/*import com.outsystemsenterprise.medtronicdev.R;*/
 
 import com.vidyo.VidyoClient.Connector.Connector;
 import com.vidyo.VidyoClient.Connector.ConnectorPkg;
@@ -241,7 +240,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
         if (mVidyoConnector != null) {
             mVidyoConnector.unregisterLogEventListener();
             mVidyoConnector.unregisterLocalCameraEventListener();
-
+   
             mVidyoConnector.disable();
             mVidyoConnector = null;
         }
@@ -380,11 +379,12 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mToggleConnectButton.setChecked(true);
 
             mToolbarStatus.setText("Disconnecting...");
-
+          
             mVidyoConnector.disconnect();
+
         }
     }
-
+    
     // Toggle the microphone privacy
     public void MicrophonePrivacyButtonPressed(View v) {
         mVidyoConnector.setMicrophonePrivacy(((ToggleButton) v).isChecked());
