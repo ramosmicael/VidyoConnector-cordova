@@ -67,7 +67,7 @@
 		<source-file src="src/android/res/values/styles.xml" target-dir="res/values" />
 		<source-file src="src/android/res/values-w820dp/dimens.xml" target-dir="res/values-w820dp" />
 
-		<hook type="after_plugin_install" src="scripts/hook-add-r-import.js"/>
+		<!--<hook type="after_plugin_install" src="scripts/hook-add-r-import.js"/>-->
 		
 		<framework src="com.android.support:appcompat-v7:23.0.0" />		
 	</platform>
