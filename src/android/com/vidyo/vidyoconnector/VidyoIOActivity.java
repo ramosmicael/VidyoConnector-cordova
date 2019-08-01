@@ -84,6 +84,9 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        
+        // Keep the device awake
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Initialize the member variables
         mToggleConnectButton = (ToggleButton) findViewById(R.id.toggleConnectButton);
@@ -235,7 +238,13 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     @Override
     protected void onDestroy() {
         mLogger.Log("onDestroy");
-        // ConnectorPkg.uninitialize();
+        ConnectorPkg.setApplicationUIContext(null);
+        
+        //TODO
+        //cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // Uninitialize the VidyoClient library - this should be done once in the lifetime of the application.
+        ConnectorPkg.uninitialize();
 
         if (mVidyoConnector != null) {
             mVidyoConnector.unregisterLogEventListener();
@@ -381,7 +390,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
             mToolbarStatus.setText("Disconnecting...");
           
             mVidyoConnector.disconnect();
-
+            
+            super.onBackPressed();
         }
     }
     

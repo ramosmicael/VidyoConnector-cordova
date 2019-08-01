@@ -7,9 +7,14 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.PluginResult;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+
+import android.view.WindowManager;
 
 import com.vidyo.vidyoconnector.VidyoIOActivity;
 
@@ -29,7 +34,8 @@ public class VidyoIOPlugin extends CordovaPlugin {
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.CAMERA,
             Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.WAKE_LOCK
     };
 
     private JSONArray launchVidyoIOArguments;
@@ -42,8 +48,25 @@ public class VidyoIOPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("launchVidyoIO")) {
             this.openNewActivity(args);
+            
+            // ACTION_KEEP_AWAKE
+            cordova.getActivity().runOnUiThread(
+            new Runnable() {
+              public void run() {
+                cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                //callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
+              }
+            });
+            
             return true;
         }
+        /*
+        cordova.getActivity().runOnUiThread(
+            new Runnable() {
+              public void run() {
+                cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+              }
+            });*/
         return false;
     }
 
