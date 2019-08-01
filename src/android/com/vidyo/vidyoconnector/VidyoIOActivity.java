@@ -86,7 +86,8 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
         setContentView(R.layout.activity_main);
         
         // Keep the device awake
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        /*NOESIS 2019.08.01 REMOVE COMMENT TO KEEP SCREEN*/
+        /*getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);*/
 
         // Initialize the member variables
         mToggleConnectButton = (ToggleButton) findViewById(R.id.toggleConnectButton);
@@ -238,13 +239,17 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
     @Override
     protected void onDestroy() {
         mLogger.Log("onDestroy");
-        ConnectorPkg.setApplicationUIContext(null);
+        
+        /*NOESIS REMOVED TO TEST*/
+        /*ConnectorPkg.setApplicationUIContext(null);*/
         
         //TODO
         //cordova.getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Uninitialize the VidyoClient library - this should be done once in the lifetime of the application.
-        ConnectorPkg.uninitialize();
+        
+        /*NOESIS COMMENTED TO TEST - EQUAL ORIGINAL*/
+        //ConnectorPkg.uninitialize();
 
         if (mVidyoConnector != null) {
             mVidyoConnector.unregisterLogEventListener();
@@ -391,6 +396,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
           
             mVidyoConnector.disconnect();
             
+            /*NOESIS 2019.08.01*/
             super.onBackPressed();
         }
     }
