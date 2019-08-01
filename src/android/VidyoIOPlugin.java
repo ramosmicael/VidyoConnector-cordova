@@ -7,19 +7,21 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.PluginResult;
+
+import org.apache.cordova.PluginResult;/*NOESIS 2019.08.01*/
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-import android.view.WindowManager;
+import android.view.WindowManager;/*NOESIS 2019.08.01*/
 
 import com.vidyo.vidyoconnector.VidyoIOActivity;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
+
+import android.content.pm.PackageManager;/*NOESIS 2019.08.01*/
+
 import android.widget.Toast;
 
 /**
@@ -28,6 +30,7 @@ import android.widget.Toast;
 public class VidyoIOPlugin extends CordovaPlugin {
 
     private static final int PERMISSION_REQ_CODE = 0x7b;
+    /*NOESIS 2019.08.01*/
     private static final String ACTION_KEEP_AWAKE = "keepAwake";
     private static final String ACTION_ALLOW_SLEEP_AGAIN = "allowSleepAgain";
 
@@ -35,7 +38,7 @@ public class VidyoIOPlugin extends CordovaPlugin {
             Manifest.permission.CAMERA,
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.WAKE_LOCK
+            Manifest.permission.WAKE_LOCK /*NOESIS 2019.08.01*/
     };
 
     private JSONArray launchVidyoIOArguments;
@@ -50,13 +53,14 @@ public class VidyoIOPlugin extends CordovaPlugin {
             this.openNewActivity(args);
             
             // ACTION_KEEP_AWAKE
-            cordova.getActivity().runOnUiThread(
+            /*NOESIS 2019.08.01 REMOVE COMMENT TO TEST THE KEEP SCREEN*/ 
+            /*cordova.getActivity().runOnUiThread(
             new Runnable() {
               public void run() {
                 cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 //callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
               }
-            });
+            });*/
             
             return true;
         }
@@ -93,14 +97,15 @@ public class VidyoIOPlugin extends CordovaPlugin {
 
     @Override
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) throws JSONException {
-        
+        /*NOESIS 2019.08.01 REMOVE COMMENT TO TEST THE KEEP SCREEN*/ 
+            /*
         cordova.getActivity().runOnUiThread(
             new Runnable() {
               public void run() {
                 cordova.getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
               }
-            });
+            });*/
         
         
         if (requestCode == PERMISSION_REQ_CODE) {
