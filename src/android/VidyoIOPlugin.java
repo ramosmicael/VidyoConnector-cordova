@@ -38,7 +38,7 @@ public class VidyoIOPlugin extends CordovaPlugin {
             Manifest.permission.CAMERA,
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.WAKE_LOCK /*NOESIS 2019.08.01*/
+            //Manifest.permission.WAKE_LOCK /*NOESIS 2019.08.01*/
     };
 
     private JSONArray launchVidyoIOArguments;
