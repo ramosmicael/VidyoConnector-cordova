@@ -198,6 +198,7 @@ public class VidyoIOActivity extends Activity implements Connector.IConnect, Con
                         Logger.getInstance().Log("onResume: mVidyoConnectorConstructed => " + (mVidyoConnectorConstructed ? "success" : "failed"));
                     }
 
+                    
                     // Resume camera privacy if selected
                     if (mVidyoConnector != null) {
                         mVidyoConnector.setCameraPrivacy(mIsCameraPrivacyOn);
