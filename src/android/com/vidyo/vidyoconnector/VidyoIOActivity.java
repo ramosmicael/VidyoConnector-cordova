@@ -22,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.NOK.NOK.R;
+/*
 import com.vidyo.vidyoiohybrid.R;
 /*import com.outsystemsenterprise.medtronicdev.R;*/
 
